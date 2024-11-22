@@ -1,0 +1,25 @@
+[project]
+name="terminal-velocity"
+version="0.1.10"
+authors = [
+  { name="Sean Hammond", email="author@example.com" },
+  { name="Vincent Perricone", email="author@example.com" },
+  { name="Chris Samuelson", email="chris.sam55@gmail.com" },
+]
+description="A fast note-taking app for the UNIX terminal"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+  "urwid>=2.6.16",
+  "chardet>=5.2.0",
+  "configparser>=7.1.0",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+repository="http://vhp.github.com/terminal_velocity/"
+

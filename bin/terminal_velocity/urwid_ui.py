@@ -6,12 +6,11 @@ Implemented using the console user interface library urwid.
 import sys
 import subprocess
 import shlex
-import pipes
 import logging
 logger = logging.getLogger(__name__)
 
 import urwid
-import notebook
+from . import notebook
 
 
 palette = [
@@ -324,15 +323,15 @@ class MainFrame(urwid.Frame):
 
         elif key in ["enter"]:
             if self.selected_note:
-                system(self.editor + ' ' + pipes.quote(self.selected_note.abspath), self.loop)
+                system(self.editor + ' ' + shlex.quote(self.selected_note.abspath), self.loop)
             else:
                 if self.search_box.edit_text:
                     try:
                         note = self.notebook.add_new(self.search_box.edit_text)
-                        system(self.editor + ' ' + pipes.quote(note.abspath), self.loop)
+                        system(self.editor + ' ' + shlex.quote(note.abspath), self.loop)
                     except notebook.NoteAlreadyExistsError:
                         # Try to open the existing note instead.
-                        system(self.editor + ' ' + pipes.quote(self.search_box.edit_text +
+                        system(self.editor + ' ' + shlex.quote(self.search_box.edit_text +
                                 self.notebook.extension),
                             self.loop)
                     except notebook.InvalidNoteTitleError:
