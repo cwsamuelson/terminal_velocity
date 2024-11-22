@@ -1,5 +1,3 @@
-"""A fast note-taking app for the UNIX terminal"""
-
 import argparse
 from backports import configparser as ConfigParser
 import os
