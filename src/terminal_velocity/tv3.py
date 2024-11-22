@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """A fast note-taking app for the UNIX terminal"""
 
 import argparse

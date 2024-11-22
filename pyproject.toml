@@ -23,6 +23,9 @@ classifiers = [
 [project.urls]
 repository="http://vhp.github.com/terminal_velocity/"
 
+[project.scripts]
+tv3 = "terminal_velocity.tv3:main"
+
 [dependency-groups]
 dev = [
     "build>=1.2.2.post1",
