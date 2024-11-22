@@ -16,7 +16,7 @@
     ],
     "scripts": {
       "build": [
-        "python -m build"
+        "uv build"
       ],
       "clean": [
         "rm -rf dist *.egg_info dist"
