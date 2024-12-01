@@ -16,13 +16,16 @@
     ],
     "scripts": {
       "build": [
-        "uv build"
+        "uv build $DEVBOX_PROJECT_ROOT"
       ],
       "clean": [
-        "rm -rf dist *.egg_info dist"
+        "rm -rf $DEVBOX_PROJECT_ROOT/dist $DEVBOX_PROJECT_ROOT/*.egg_info"
       ],
       "install": [
-        "uv pip install"
+        "uv pip install $DEVBOX_PROJECT_ROOT"
+      ],
+      "full": [
+        "devbox run build && devbox run install"
       ]
     }
   }

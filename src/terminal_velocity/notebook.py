@@ -58,6 +58,7 @@ import os
 import sys
 
 import chardet
+import frontmatter
 
 
 def unicode_or_bust(raw_text):
@@ -263,16 +264,37 @@ def brute_force_search(notebook, query):
     matching_notes = []
     for note in notebook:
         match = True
+        post = frontmatter.loads(note.contents)
         for search_word in search_words:
-            if search_word.islower():
+            if search_word.startswith('@'):
+                search_word = search_word[1:]
+                in_title = False
+                in_contents = False
+
+                needle = None
+                query = search_word
+                if search_word.find('=') != -1:
+                    query, needle = search_word.split('=')
+
+                if needle is None:
+                    if type(post.get(query)) == type(True):
+                        in_query = post.get(query)
+                    else:
+                        in_query = search_word in post.keys()
+                else:
+                    q = str(post.get(query))
+                    in_query = (q is not None and q == needle)
+            elif search_word.islower():
                 # Search for word case-insensitively.
                 in_title = search_word in note.title.lower()
-                in_contents = search_word in note.contents.lower()
+                in_contents = search_word in post.content.lower()
+                in_query = False
             else:
                 # Search for word case-sensitively.
                 in_title = search_word in note.title
-                in_contents = search_word in note.contents
-            if (not in_title) and (not in_contents):
+                in_contents = search_word in post.content
+                in_query = False
+            if (not in_title) and (not in_contents) and (not in_query):
                 match = False
         if match:
             matching_notes.append(note)
