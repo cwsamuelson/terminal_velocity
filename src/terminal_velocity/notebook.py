@@ -59,6 +59,7 @@ import sys
 
 import chardet
 import frontmatter
+from difflib import SequenceMatcher as SM
 
 
 def unicode_or_bust(raw_text):
@@ -276,12 +277,24 @@ def brute_force_search(notebook, query):
                 if search_word.find('=') != -1:
                     query, needle = search_word.split('=')
 
+                #! @TODO Fuzzy search as a config option
+                use_fuzzy = True
+                fuzz_score = 0.85 if use_fuzzy else 1.0
+
                 if needle is None:
                     if type(post.get(query)) == type(True):
+                        # if it's bool type, just use it's value
+                        # but only if a value isn't being specified
                         in_query = post.get(query)
+                    elif len(post.keys()) != 0:
+                        # otherwise, if no value is specified, check if that key exists
+                        ratios = [SM(None, search_word, x).ratio() for x in post.keys()]
+                        ratio = max(ratios)
+                        in_query = ratio >= fuzz_score
                     else:
-                        in_query = search_word in post.keys()
+                        in_query = False
                 else:
+                    # if a value is specified, get that key, and check its value
                     q = str(post.get(query))
                     in_query = (q is not None and q == needle)
             elif search_word.islower():
@@ -360,14 +373,11 @@ class PlainTextNoteBook(object):
         # Read any existing note files in the notes directory.
         self._notes = []
         for root, dirs, files in os.walk(self.path):
-
             # ignore any dirs we don't want to check
-            for name in self.exclude:
-                if name in dirs:
-                    dirs.remove(name)
+            if os.path.basename(os.path.expanduser(os.path.expandvars(root))) in self.exclude:
+                continue
 
             for filename in files:
-
                 # ignore anything listed in our 'exclude' list
                 if filename in self.exclude:
                     continue
