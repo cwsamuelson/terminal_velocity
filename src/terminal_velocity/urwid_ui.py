@@ -27,11 +27,11 @@ def system(cmd, loop):
 
     loop.screen.stop()
 
-    cmd = u"{0}".format(cmd)
-    cmd = cmd.encode(sys.getfilesystemencoding())  # FIXME: Correct encoding?
+    #cmd = cmd.encode(sys.getfilesystemencoding())  # FIXME: Correct encoding?
+
     safe_cmd = shlex.split(cmd)
 
-    logger.debug("System command: {0}".format(safe_cmd))
+    logger.debug(f"System command: {safe_cmd}")
 
     try:
         returncode = subprocess.check_call(safe_cmd)
@@ -111,7 +111,6 @@ class AutocompleteWidget(urwid.Edit):
         return super(AutocompleteWidget, self).render(size, self.fake_focus)
 
     def get_text(self):
-
         # When search bar is empty show placeholder text.
         if not self.edit_text and not self.autocomplete_text:
             placeholder_text = u"Find or Create"
@@ -238,7 +237,6 @@ class MainFrame(urwid.Frame):
     """The topmost urwid widget."""
 
     def __init__(self, notes_dir, editor, extension, extensions, exclude=None):
-
         self.editor = editor
         self.notebook = notebook.PlainTextNoteBook(notes_dir, extension,
                 extensions, exclude=exclude)
@@ -306,7 +304,6 @@ class MainFrame(urwid.Frame):
         raise urwid.ExitMainLoop()
 
     def keypress(self, size, key):
-
         maxcol, maxrow = size
 
         self.suppress_filter = False

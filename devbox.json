@@ -20,6 +20,9 @@
       ],
       "clean": [
         "rm -rf dist *.egg_info dist"
+      ],
+      "install": [
+        "uv pip install"
       ]
     }
   }

@@ -4,12 +4,10 @@ import os
 import logging
 import logging.handlers
 import sys
-
 import terminal_velocity.urwid_ui as urwid_ui
 
 
 def main():
-
     # Parse the command-line option for the config file.
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("-c", "--config", dest="config", action="store",
