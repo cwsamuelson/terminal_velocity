@@ -377,7 +377,11 @@ class PlainTextNoteBook(object):
             if os.path.basename(os.path.expanduser(os.path.expandvars(root))) in self.exclude:
                 continue
 
+            directories = root.split('/')
             for filename in files:
+                if len(list(set(directories) & set(self.exclude))) > 0:
+                    continue
+
                 # ignore anything listed in our 'exclude' list
                 if filename in self.exclude:
                     continue

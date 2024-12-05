@@ -1,6 +1,6 @@
 [project]
 name="terminal-velocity"
-version="0.3.0"
+version="0.4.0"
 authors = [
   { name="Sean Hammond", email="author@example.com" },
   { name="Vincent Perricone", email="author@example.com" },
